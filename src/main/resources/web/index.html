@@ -10,9 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <link rel="stylesheet" href="assets/stylesheets/main.css"/>
-    <link rel="stylesheet" href=""/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Akronim"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Caveat"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Shadows+Into+Light"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'/>
 
     <script src="scripts/main.js" async></script>
+
 </head>
 
 <body>
@@ -20,34 +24,44 @@
 <header>
 
     <h1>Guestbook</h1>
-    <img src="assets/images/logo.png" alt="Logo Guestbook"/>
 
 </header>
 
-<section id="primary-content messages">
+<section id="primary-content">
 
-    <div class="dummy-message">
-        <p class="name">Dummy Name</p>
-        <p class="time">Dummy Time</p>
-        <p class="message">Dummy Message</p>
-    </div>
+    <label for="name" class="write-us">Write us!</label>
 
-    <div class="dummy-message">
-        <p class="name">Dummy Name</p>
-        <p class="time">Dummy Time</p>
-        <p class="message">Dummy Message</p>
-    </div>
+    <section class="messages">
 
-</section>
+        <div class="message-container">
+            <span class="time">14:52 08.05.2019</span>
+            <span class="name">Dummy Name</span>
+            <p class="message">Dummy Message</p>
+        </div>
 
-<section id="send-message-form">
+        <div class="message-container">
+            <span class="time">14:52 08.05.2019</span>
+            <span class="name">Name</span>
+            <p class="message">Dummy
+                Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong
+                Message</p>
+        </div>
 
-    <div id="textarea-container">
-        <textarea name="message" id="new-message" rows="10" cols="50" placeholder="Your entry goes here!"></textarea>
-        <label for="new-message"></label>
-        <br/>
-        <button id="send-message">Send <img src="assets/images/send.png" alt="Send"/></button>
-    </div>
+    </section>
+
+    <section id="send-message-form">
+
+        <div id="textarea-container">
+            <input type="text" placeholder="Name" id="name"/>
+            <br/>
+            <textarea name="message" id="new-message" rows="10" cols="50"
+                      placeholder="Your entry goes here!"></textarea>
+            <label for="new-message"></label>
+            <br/>
+            <button id="send-message">Send <i class="far fa-paper-plane"></i></button>
+        </div>
+
+    </section>
 
 </section>
 
