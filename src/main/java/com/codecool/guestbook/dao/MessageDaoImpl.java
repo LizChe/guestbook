@@ -1,14 +1,14 @@
 package com.codecool.guestbook.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.time.OffsetDateTime;
 
 import com.codecool.guestbook.model.Message;
 
@@ -24,7 +24,7 @@ public class MessageDaoImpl implements MessageDao {
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setDate(1, Date.valueOf(message.getDATE()));
+            preparedStatement.setObject(1, message.getDATE());
             preparedStatement.setString(2, message.getNAME());
             preparedStatement.setString(3, message.getMESSAGE());
             preparedStatement.executeUpdate();
@@ -38,7 +38,8 @@ public class MessageDaoImpl implements MessageDao {
     public List<Message> getMessages() throws DaoException {
 
         List<Message> messages;
-        String query = "SELECT date, name, message FROM messages";
+        String query = "SELECT date, name, message FROM messages "
+                + "ORDER BY id";
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -56,13 +57,13 @@ public class MessageDaoImpl implements MessageDao {
         Message message;
         List<Message> messages = new ArrayList<>();
 
-        LocalDate DATE;
+        OffsetDateTime DATE;
         String NAME;
         String MESSAGE;
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                DATE = resultSet.getDate("date").toLocalDate();
+                DATE = resultSet.getObject("date", OffsetDateTime.class);
                 NAME = resultSet.getString("name");
                 MESSAGE = resultSet.getString("message");
 
