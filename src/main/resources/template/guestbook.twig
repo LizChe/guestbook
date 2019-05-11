@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <title>Guestbook</title>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="../static/assets/stylesheets/main.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Akronim"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Caveat"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Shadows+Into+Light"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'/>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Guestbook</h1>
+
+</header>
+
+<section id="primary-content">
+
+    <label for="name" class="write-us">Write us!</label>
+
+    <section class="messages">
+
+        {% for message in messages %}
+            <div class="message-container">
+                <span class="time">{{ message.getFormattedDate }}</span>
+                <span class="name">{{ message.getNAME }}</span>
+                <p class="message">{{ message.getMESSAGE }}</p>
+            </div>
+        {% endfor %}
+
+    </section>
+
+    <section id="send-message-form">
+
+        <div id="textarea-container">
+            <form class="form-container" method="POST">
+                <input name="name" type="text" placeholder="Name" id="name" maxlength="50" required="required"/>
+                <br/>
+                <textarea name="message" id="new-message" rows="10" cols="50"
+                          placeholder="Your entry goes here!" required="required"></textarea>
+                <label for="new-message"></label>
+                <br/>
+                <button id="send-message" type="submit">Send <i class="far fa-paper-plane"></i></button>
+            </form>
+        </div>
+
+    </section>
+
+</section>
+
+</body>
+
+</html>
