@@ -1,21 +1,27 @@
 package com.codecool.guestbook.model;
 
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Message {
 
-    private final LocalDate DATE;
+    private final OffsetDateTime DATE;
     private final String NAME;
     private final String MESSAGE;
 
-    public Message (LocalDate DATE, String NAME, String MESSAGE) {
+    public Message (OffsetDateTime DATE, String NAME, String MESSAGE) {
         this.DATE = DATE;
         this.NAME = NAME;
         this.MESSAGE = MESSAGE;
     }
 
-    public LocalDate getDATE() {
+    public OffsetDateTime getDATE() {
         return DATE;
+    }
+
+    public String getFormattedDate() {
+        String format = "dd/MM/yy E hh:mm a";
+        return DATE.format(DateTimeFormatter.ofPattern(format));
     }
 
     public String getNAME() {
