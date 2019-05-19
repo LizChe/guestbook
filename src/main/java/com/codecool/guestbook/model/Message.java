@@ -5,30 +5,30 @@ import java.time.format.DateTimeFormatter;
 
 public class Message {
 
-    private final OffsetDateTime DATE;
-    private final String NAME;
-    private final String MESSAGE;
+    private final OffsetDateTime date;
+    private final String name;
+    private final String message;
 
-    public Message (OffsetDateTime DATE, String NAME, String MESSAGE) {
-        this.DATE = DATE;
-        this.NAME = NAME;
-        this.MESSAGE = MESSAGE;
+    public Message (OffsetDateTime date, String name, String message) {
+        this.date = date;
+        this.name = name;
+        this.message = message;
     }
 
-    public OffsetDateTime getDATE() {
-        return DATE;
+    public OffsetDateTime getDate() {
+        return date;
     }
 
     public String getFormattedDate() {
         String format = "dd/MM/yy E hh:mm a";
-        return DATE.format(DateTimeFormatter.ofPattern(format));
+        return date.format(DateTimeFormatter.ofPattern(format));
     }
 
-    public String getNAME() {
-        return NAME;
+    public String getName() {
+        return name;
     }
 
-    public String getMESSAGE() {
-        return MESSAGE;
+    public String getMessage() {
+        return message;
     }
 }
