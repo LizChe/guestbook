@@ -33,39 +33,19 @@ public class Guestbook implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/guestbook.twig");
-        JtwigModel model = JtwigModel.newModel();
         String method = httpExchange.getRequestMethod();
-        String response = "";
 
         if (method.equals("GET")) {
-            create(model);
-            response = template.render(model);
+            renderGuestbook(httpExchange);
         }
 
         if (method.equals("POST")) {
-            InputStreamReader inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String data = bufferedReader.readLine();
-            Map inputs = parse(data);
-
-            String name = inputs.get("name").toString();
-            String message = inputs.get("message").toString();
-            messageService.createMessage(name, message);
-
-            create(model);
-            response = template.render(model);
+            handlePOST(httpExchange);
         }
 
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream outputStream = httpExchange.getResponseBody();
-        outputStream.write(response.getBytes());
-        outputStream.close();
     }
 
     private static Map<String, String> parse(String data) throws UnsupportedEncodingException {
-
         Map<String, String> map = new HashMap<>();
         String[] pairs = data.split("&");
         String[] keyValue;
@@ -82,5 +62,46 @@ public class Guestbook implements HttpHandler {
     private void create(JtwigModel model) {
         List<Message> messages = messageService.getMessages();
         model.with("messages", messages);
+    }
+
+    private void renderGuestbook(HttpExchange httpExchange) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/guestbook.twig");
+        JtwigModel model = JtwigModel.newModel();
+        create(model);
+        String response = template.render(model);
+        sendResponse(httpExchange, response);
+    }
+
+    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        writeToOutput(httpExchange, response);
+    }
+
+    private Map<String, String> getPOSTInputs(HttpExchange httpExchange) throws IOException {
+        InputStreamReader inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String data = bufferedReader.readLine();
+        return parse(data);
+    }
+
+    private void handlePOST(HttpExchange httpExchange) throws  IOException {
+        Map<String, String> inputs = getPOSTInputs(httpExchange);
+        String name = inputs.get("name");
+        String message = inputs.get("message");
+        messageService.createMessage(name, message);
+        redirectToGuestbook(httpExchange);
+    }
+
+    private void redirectToGuestbook(HttpExchange httpExchange) throws IOException {
+        String response = "";
+        httpExchange.getResponseHeaders().set("Location", "/guestbook");
+        httpExchange.sendResponseHeaders(302, response.getBytes().length);
+        writeToOutput(httpExchange, response);
+    }
+
+    private void writeToOutput(HttpExchange httpExchange, String response) throws IOException {
+        OutputStream outputStream = httpExchange.getResponseBody();
+        outputStream.write(response.getBytes());
+        outputStream.close();
     }
 }

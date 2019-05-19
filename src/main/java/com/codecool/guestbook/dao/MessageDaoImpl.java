@@ -24,9 +24,9 @@ public class MessageDaoImpl implements MessageDao {
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setObject(1, message.getDATE());
-            preparedStatement.setString(2, message.getNAME());
-            preparedStatement.setString(3, message.getMESSAGE());
+            preparedStatement.setObject(1, message.getDate());
+            preparedStatement.setString(2, message.getName());
+            preparedStatement.setString(3, message.getMessage());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -57,17 +57,17 @@ public class MessageDaoImpl implements MessageDao {
         Message message;
         List<Message> messages = new ArrayList<>();
 
-        OffsetDateTime DATE;
-        String NAME;
-        String MESSAGE;
+        OffsetDateTime date;
+        String name;
+        String userMessage;
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                DATE = resultSet.getObject("date", OffsetDateTime.class);
-                NAME = resultSet.getString("name");
-                MESSAGE = resultSet.getString("message");
+                date = resultSet.getObject("date", OffsetDateTime.class);
+                name = resultSet.getString("name");
+                userMessage = resultSet.getString("message");
 
-                message = new Message(DATE, NAME, MESSAGE);
+                message = new Message(date, name, userMessage);
                 messages.add(message);
             }
         } catch (SQLException e) {

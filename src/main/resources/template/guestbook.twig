@@ -29,15 +29,15 @@
 
 <section id="primary-content">
 
-    <label for="name" class="write-us"><i class='fas fa-pencil-alt'></i> Write us!</label>
+    <label for="new-message" class="write-us"><i class='fas fa-pencil-alt'></i> Write us!</label>
 
     <section class="messages">
 
         {% for message in messages %}
             <div class="message-container">
                 <span class="time">{{ message.getFormattedDate }}</span>
-                <span class="name">{{ message.getNAME }}</span>
-                <p class="message">{{ message.getMESSAGE }}</p>
+                <span class="name">{{ message.getName }}</span>
+                <p class="message">{{ message.getMessage }}</p>
             </div>
         {% endfor %}
 
@@ -51,7 +51,7 @@
                 <br/>
                 <textarea name="message" id="new-message" rows="10" cols="50"
                           placeholder="Your entry goes here!" required="required"></textarea>
-                <label for="new-message"></label>
+                <label for="name"></label>
                 <br/>
                 <button id="send-message" type="submit">Send <i class="far fa-paper-plane"></i></button>
             </form>

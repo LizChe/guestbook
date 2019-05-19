@@ -34,11 +34,11 @@ public class MessageService {
         return messages;
     }
 
-    public void createMessage(String NAME, String MESSAGE) {
+    public void createMessage(String name, String userMessage) {
         Message message;
-        OffsetDateTime DATE = OffsetDateTime.now(ZoneOffset.UTC);
+        OffsetDateTime date = OffsetDateTime.now(ZoneOffset.UTC);
 
-        message = new Message(DATE, NAME, MESSAGE);
+        message = new Message(date, name, userMessage);
 
         try {
             messageDao.create(message);
