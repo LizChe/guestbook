@@ -36,8 +36,8 @@
         {% for message in messages %}
             <div class="message-container">
                 <span class="time">{{ message.getFormattedDate }}</span>
-                <span class="name">{{ message.getNAME }}</span>
-                <p class="message">{{ message.getMESSAGE }}</p>
+                <span class="name">{{ message.getName }}</span>
+                <p class="message">{{ message.getMessage }}</p>
             </div>
         {% endfor %}
 
